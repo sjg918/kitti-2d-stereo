@@ -13,8 +13,8 @@ cfg.base_ = 'bnrnet34-cls100'
 # directory
 cfg.sceneflow_home = '/home/user/Dataset/sceneflow/'
 cfg.logdir = '/home/user/kew/KITTI-2D-stereo/checkpoint/' + cfg.base_ + '-sceneflowpre/'
-cfg.traintxt = '/home/user/Dataset/sceneflow/sceneflow_train.txt'
-cfg.valtxt = '/home/user/Dataset/sceneflow/sceneflow_test.txt'
+cfg.traintxt = '/home/user/kew/KITTI-2D-stereo/gendata/sceneflow_train.txt'
+cfg.valtxt = '/home/user/kew/KITTI-2D-stereo/gendata/sceneflow_test.txt'
 
 cfg.pretrain_res = '/home/user/kew/KITTI-2D-stereo/checkpoint/pretrain/' + cfg.base_ + '.pth'
 
