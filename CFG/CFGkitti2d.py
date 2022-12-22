@@ -20,8 +20,8 @@ cfg.pretrain_neck = '/home/user/kew/KITTI-2D-stereo/checkpoint/pretrain/necknetw
 cfg.kitti_home = '/home/user/Dataset/kitti_3dobject/KITTI/object/training/'
 cfg.gendata_home = '/home/user/kew/KITTI-2D-stereo/gendata/'
 cfg.result_home = '/home/user/kew/KITTI-2D-stereo/result/'
-cfg.traintxt = '/home/user/Dataset/kitti_3dobject/KITTI/object/training/train.txt'
-cfg.valtxt = '/home/user/Dataset/kitti_3dobject/KITTI/object/training/val.txt'
+cfg.traintxt = '/home/user/kew/KITTI-2D-stereo/gendata/train.txt'
+cfg.valtxt = '/home/user/kew/KITTI-2D-stereo/gendata/val.txt'
 
 # image
 cfg.img_width = 768
