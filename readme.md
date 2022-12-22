@@ -27,8 +27,9 @@ Result using pseudo LiDAR points generated from disp map of PSMNet: CIA-SSD was 
 [visualdet3D](https://github.com/Owen-Liuyuxuan/visualDet3D)</br>
 
 ![ours](https://github.com/sjg918/kitti-2d-stereo/blob/main/result/ours.png?raw=true)
-This is our output.</br>
+ours.</br>
 
 # special thanks
 [YOLOStereo3D: A Step Back to 2D for Efficient Stereo 3D Detection](https://arxiv.org/abs/2103.09422)</br>
+[Dist-YOLO: Fast Object Detection with Distance Estimation](https://www.mdpi.com/2076-3417/12/3/1354)</br>
 [Improved Stereo Matching Accuracy Based on Selective Backpropagation and Extended Cost Volume](https://link.springer.com/article/10.1007/s12555-021-0724-6)</br>
