@@ -287,6 +287,46 @@ def read_calib_file(filepath):
             'R_rect': R0.reshape(3, 3),
             'Tr_velo2cam': Tr_velo_to_cam.reshape(3, 4)}
 
+
+def compute_2d_bbox_from_3d_bbox(l, w, h, x, y, z, ry, K):
+    # compute rotational matrix around yaw axis
+    c = np.cos(ry)
+    s = np.sin(ry)
+    R = np.array([[c, 0, s], [0, 1, 0], [-s, 0, c]])
+
+    # 3d bounding box corners
+    x_corners = [l / 2, l / 2, -l / 2, -l / 2, l / 2, l / 2, -l / 2, -l / 2]
+    y_corners = [0, 0, 0, 0, -h, -h, -h, -h]
+    z_corners = [w / 2, -w / 2, -w / 2, w / 2, w / 2, -w / 2, -w / 2, w / 2]
+
+    # rotate and translate 3d bounding box
+    corners_3d = np.dot(R, np.vstack([x_corners, y_corners, z_corners]))
+    # print corners_3d.shape
+    corners_3d[0, :] = corners_3d[0, :] + x
+    corners_3d[1, :] = corners_3d[1, :] + y
+    corners_3d[2, :] = corners_3d[2, :] + z
+
+    # project the 3d bounding box into the image plane
+    corners_2d = project_to_image(np.transpose(corners_3d), K)
+
+    xmin = corners_2d[:, 0].min()
+    ymin = corners_2d[:, 1].min()
+    xmax = corners_2d[:, 0].max()
+    ymax = corners_2d[:, 1].max()
+
+    return xmin, ymin, xmax, ymax
+
+
+def project_to_image(pts_3d, P):
+    n = pts_3d.shape[0]
+    pts_3d_extend = np.hstack((pts_3d, np.ones((n, 1))))
+    # print(('pts_3d_extend shape: ', pts_3d_extend.shape))
+    pts_2d = np.dot(pts_3d_extend, np.transpose(P))  # nx3
+    pts_2d[:, 0] /= pts_2d[:, 2]
+    pts_2d[:, 1] /= pts_2d[:, 2]
+    return pts_2d[:, 0:2]
+
+
   
 def NmsCls_with_depth(loc, conf, depth, thr=0.5):
     conf_ = torch.max(conf, dim=1)
