@@ -267,7 +267,26 @@ def ThresHold_with_depth(loc, conf, depth, num_classes, thr=0.3):
     depth = depth[depth_mask].view([-1, 1])
 
     return loc, conf, depth
-  
+
+
+def read_calib_file(filepath):
+    with open(filepath) as f:
+        lines = f.readlines()
+
+    obj = lines[2].strip().split(' ')[1:]
+    P2 = np.array(obj, dtype=np.float32)
+    obj = lines[3].strip().split(' ')[1:]
+    P3 = np.array(obj, dtype=np.float32)
+    obj = lines[4].strip().split(' ')[1:]
+    R0 = np.array(obj, dtype=np.float32)
+    obj = lines[5].strip().split(' ')[1:]
+    Tr_velo_to_cam = np.array(obj, dtype=np.float32)
+
+    return {'P2': P2.reshape(3, 4),
+            'P3': P3.reshape(3, 4),
+            'R_rect': R0.reshape(3, 3),
+            'Tr_velo2cam': Tr_velo_to_cam.reshape(3, 4)}
+
   
 def NmsCls_with_depth(loc, conf, depth, thr=0.5):
     conf_ = torch.max(conf, dim=1)
