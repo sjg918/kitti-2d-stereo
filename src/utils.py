@@ -363,3 +363,14 @@ def NmsCls_with_depth(loc, conf, depth, thr=0.5):
             dic[str(i)] = k
 
     return dic
+
+
+def convert_cls(c):
+    if c == 'Car':
+        return 1
+    elif c == 'Pedestrian':
+        return 2
+    elif c == 'Cyclist':
+        return 3
+    else:
+        return 0
