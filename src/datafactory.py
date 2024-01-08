@@ -259,11 +259,11 @@ class kitti2ddataset(data.Dataset):
             left_path = self.cfg.kitti_home + 'image_2/' + self.lists[id] + '.png'
             right_path = self.cfg.kitti_home + 'image_3/' + self.lists[id] + '.png'
             label_path = self.cfg.gendata_home + '2Dlabel_2/' + self.lists[id] + '.txt'
-            disp_path = self.cfg.gendata_home + 'image_2sgm/' + self.lists[id] + '.png'
+            #disp_path = self.cfg.gendata_home + 'image_2sgm/' + self.lists[id] + '.png'
 
             left_img, right_img = cv2.imread(left_path), cv2.imread(right_path)
-            dataL = cv2.imread(disp_path)
-            dataL = cv2.cvtColor(dataL, cv2.COLOR_BGR2GRAY)
+            #dataL = cv2.imread(disp_path)
+            #dataL = cv2.cvtColor(dataL, cv2.COLOR_BGR2GRAY)
             oh, ow, _ = left_img.shape
             if os.path.isfile(label_path):
                 bbox = self.bboxloader(label_path, ow, oh)
@@ -274,7 +274,7 @@ class kitti2ddataset(data.Dataset):
                 topcut = self.cfg.img_topcut
                 left_img = left_img[topcut:, :, :]
                 right_img = right_img[topcut:, :, :]
-                dataL = dataL[topcut:, :]
+                #dataL = dataL[topcut:, :]
                 if bbox is not None: 
                     bbox[:, 1] = torch.clamp(bbox[:, 1] - topcut, min=0)
                     bbox[:, 3] = torch.clamp(bbox[:, 3] - topcut, min=0)
@@ -283,7 +283,7 @@ class kitti2ddataset(data.Dataset):
             right_img = cv2.cvtColor(right_img, cv2.COLOR_BGR2RGB)
             left_img = cv2.resize(left_img, (self.cfg.img_width, self.cfg.img_height), cv2.INTER_LINEAR)
             right_img = cv2.resize(right_img, (self.cfg.img_width, self.cfg.img_height), cv2.INTER_LINEAR)
-            dataL = cv2.resize(dataL, (self.cfg.img_width, self.cfg.img_height), cv2.INTER_NEAREST)
+            #dataL = cv2.resize(dataL, (self.cfg.img_width, self.cfg.img_height), cv2.INTER_NEAREST)
 
             left_img = (left_img.astype(np.float32) / 255.)
             right_img = (right_img.astype(np.float32) / 255.)
@@ -305,9 +305,10 @@ class kitti2ddataset(data.Dataset):
                 bbox = np.expand_dims(bbox, 0)
                 bbox = torch.from_numpy(bbox)
 
-            dataL = torch.from_numpy(dataL).unsqueeze(0).to(torch.float64)
+            #dataL = torch.from_numpy(dataL).unsqueeze(0).to(torch.float64)
             target = bbox
-            return left_img, right_img , dataL, target, left_path, oh, ow
+            #return left_img, right_img , dataL, target, left_path, oh, ow
+            return left_img, right_img, target, left_path, oh, ow
 
         if torch.rand(1) < 0.5:
             while True:
