@@ -208,7 +208,7 @@ def GenResult_2dbboxTxt():
 
     with torch.no_grad():
         for imgid in range(len(kitti_dataset)):
-            left_img, right_img , dataL, target, left_path, oh, ow = kitti_dataset[imgid]
+            left_img, right_img , target, left_path, oh, ow = kitti_dataset[imgid]
             #print(left_path)
             imgnum = left_path.split('/')[-1].split('.')[0]
             left_img = left_img.to(cfg.device)
